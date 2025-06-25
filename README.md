@@ -1,5 +1,7 @@
 # ngspiceX
 
+[![Deploy React App to GitHub Pages](https://github.com/shishir-dey/ngspiceX/actions/workflows/deploy.yml/badge.svg)](https://github.com/shishir-dey/ngspiceX/actions/workflows/deploy.yml)
+
 A modern browser-based SPICE circuit simulator built with React + Vite + Radix UI.
 
 ## Quick Start

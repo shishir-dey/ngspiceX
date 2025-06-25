@@ -172,7 +172,8 @@ export function useNgspice() {
           '> Loading ngspice for command execution...',
         ])
         const script = document.createElement('script')
-        script.src = '/wasm/ngspice.js'
+        const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/'
+        script.src = `${baseUrl}wasm/ngspice.js`
         script.type = 'text/javascript'
 
         script.onload = () => {
@@ -502,7 +503,8 @@ export function useNgspice() {
           // Load and run ngspice
           setOutput((prev) => [...prev, '> Loading ngspice WASM...'])
           const script = document.createElement('script')
-          script.src = '/wasm/ngspice.js'
+          const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/'
+          script.src = `${baseUrl}wasm/ngspice.js`
           script.type = 'text/javascript'
 
           script.onload = () => {

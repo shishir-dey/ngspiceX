@@ -1,0 +1,145 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Apple System Colors */
+    --color-gray-50: #f9fafb;
+    --color-gray-100: #f3f4f6;
+    --color-gray-200: #e5e7eb;
+    --color-gray-300: #d1d5db;
+    --color-gray-400: #9ca3af;
+    --color-gray-500: #6b7280;
+    --color-gray-600: #4b5563;
+    --color-gray-700: #374151;
+    --color-gray-800: #1f2937;
+    --color-gray-900: #111827;
+
+    --color-blue-500: #3b82f6;
+    --color-blue-600: #2563eb;
+
+    /* Apple System Font Stack */
+    --font-apple:
+      -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
+      system-ui, sans-serif;
+    --font-apple-mono:
+      'Menlo', 'Monaco', 'SF Mono', ui-monospace, SFMono-Regular,
+      'Cascadia Code', 'Roboto Mono', 'Lucida Console', monospace;
+    /* Apple Editor Font - uses system font for better readability */
+    --font-apple-editor:
+      -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
+      system-ui, sans-serif;
+  }
+
+  * {
+    border-color: #e5e7eb;
+  }
+
+  body {
+    background-color: #f9fafb;
+    color: #111827;
+    font-family: var(--font-apple);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Apply Apple fonts to all text elements */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  span,
+  div,
+  button,
+  input,
+  textarea,
+  select {
+    font-family: var(--font-apple);
+  }
+
+  /* Terminal elements use Menlo (Apple's terminal font) */
+  .terminal {
+    font-family: var(--font-apple-mono) !important;
+  }
+
+  /* Enhanced terminal scrollbar */
+  .terminal ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .terminal ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+  }
+
+  .terminal ::-webkit-scrollbar-thumb {
+    background: rgba(75, 85, 99, 0.5);
+    border-radius: 3px;
+  }
+
+  .terminal ::-webkit-scrollbar-thumb:hover {
+    background: rgba(75, 85, 99, 0.8);
+  }
+
+  /* Editor elements also use Menlo for consistent terminal-style coding */
+  .editor {
+    font-family: var(--font-apple-mono) !important;
+  }
+
+  /* Traditional monospace elements still use Menlo */
+  code,
+  pre,
+  .font-mono {
+    font-family: var(--font-apple-mono) !important;
+  }
+
+  /* Clean scrollbars */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  /* Plotly specific styling for proper card integration */
+  .plotly-div {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .modebar {
+    right: 10px !important;
+    top: 10px !important;
+    z-index: 10 !important;
+  }
+
+  .plotly .modebar {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 4px !important;
+  }
+
+  .plotly .modebar-btn {
+    color: #666 !important;
+  }
+
+  .plotly .modebar-btn:hover {
+    background: rgba(0, 0, 0, 0.1) !important;
+  }
+}

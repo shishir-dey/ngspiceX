@@ -264,7 +264,7 @@ const EditorPane = ({
 
   if (mode === 'text') {
     return (
-      <div className="h-full w-full flex flex-col relative rounded-b-lg overflow-hidden">
+      <div className="h-full w-full min-h-[300px] flex flex-col relative rounded-b-lg overflow-hidden">
         <textarea
           ref={textareaRef}
           value={netlistText}
@@ -308,7 +308,7 @@ const EditorPane = ({
   }
 
   return (
-    <div className="h-full w-full bg-gray-50 overflow-hidden relative rounded-b-lg">
+    <div className="h-full w-full min-h-[300px] bg-gray-50 overflow-hidden relative rounded-b-lg">
       <svg
         ref={svgRef}
         className="w-full h-full"

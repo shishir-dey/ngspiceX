@@ -271,7 +271,7 @@ C1 out 0 1u
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 h-[calc(100vh-120px)]">
           {/* Left Column: Circuit Editor */}
           <div className="flex flex-col h-full">
-            <Card className="flex-1 min-h-0 flex flex-col">
+            <Card className="flex-1 min-h-[400px] lg:min-h-0 flex flex-col">
               <CardHeader className="pb-2 flex-shrink-0">
                 <div className="flex items-center justify-between">
                   <CardTitle className="flex items-center gap-2 text-base font-medium">
@@ -286,7 +286,7 @@ C1 out 0 1u
                   </Tabs>
                 </div>
               </CardHeader>
-              <CardContent className="p-0 flex-1 min-h-0">
+              <CardContent className="p-0 flex-1 min-h-[350px]">
                 <EditorPane
                   mode={mode}
                   netlistText={netlistText}
@@ -302,7 +302,7 @@ C1 out 0 1u
           {/* Right Column: Waveform and Console */}
           <div className="flex flex-col h-full space-y-2">
             {/* Waveform Viewer */}
-            <Card className="flex-1 min-h-0 flex flex-col">
+            <Card className="flex-1 min-h-[400px] lg:min-h-0 flex flex-col">
               <CardHeader className="pb-2 flex-shrink-0">
                 <div className="flex items-center justify-between">
                   <CardTitle className="flex items-center gap-2 text-base font-medium">
@@ -446,7 +446,7 @@ C1 out 0 1u
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="p-0 flex-1 min-h-0 overflow-hidden">
+              <CardContent className="p-0 flex-1 min-h-[350px] overflow-hidden">
                 <WaveformPane
                   data={
                     simulationData
@@ -467,7 +467,7 @@ C1 out 0 1u
             </Card>
 
             {/* Console */}
-            <Card className="h-48 min-h-48 flex flex-col">
+            <Card className="h-48 min-h-48 lg:h-48 lg:min-h-48 flex flex-col">
               <CardHeader className="pb-2 flex-shrink-0">
                 <CardTitle className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-base font-medium">

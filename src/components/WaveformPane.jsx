@@ -168,7 +168,7 @@ const WaveformPane = ({ data }) => {
 
   if (!data) {
     return (
-      <div className="h-full w-full flex items-center justify-center text-gray-500 bg-gray-50 rounded-b-lg">
+      <div className="h-full w-full min-h-[300px] flex items-center justify-center text-gray-500 bg-gray-50 rounded-b-lg">
         <div className="text-center">
           <div className="text-base font-medium mb-2 text-gray-700">
             No simulation data
@@ -184,7 +184,7 @@ const WaveformPane = ({ data }) => {
   // Handle operating point analysis (no plots, just values)
   if (data.type === 'operating_point' && data.values) {
     return (
-      <div className="h-full w-full p-4 bg-gray-50 rounded-b-lg overflow-auto">
+      <div className="h-full w-full min-h-[300px] p-4 bg-gray-50 rounded-b-lg overflow-auto">
         <div className="bg-white rounded-lg border border-gray-200 p-4">
           <h3 className="text-lg font-medium text-gray-900 mb-3">
             Operating Point Analysis
@@ -215,7 +215,7 @@ const WaveformPane = ({ data }) => {
   return (
     <div
       ref={containerRef}
-      className="h-full w-full rounded-b-lg overflow-hidden flex flex-col p-2 relative"
+      className="h-full w-full min-h-[300px] rounded-b-lg overflow-hidden flex flex-col p-2 relative"
     >
       <div ref={plotRef} className="flex-1 w-full min-h-0" />
     </div>

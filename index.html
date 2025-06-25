@@ -1,91 +1,72 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- SEO Meta Tags -->
-    <title>ngspiceX - Browser-Based SPICE Circuit Simulator | Online Electronics Analysis</title>
-    <meta
-      name="description"
-      content="ngspiceX is a powerful browser-based SPICE circuit simulator that runs entirely in your web browser. Perform transient, AC, and DC analysis of electronic circuits online without any installation required."
-    />
-    <meta
-      name="keywords"
-      content="SPICE simulator, circuit analysis, browser SPICE, ngspice, electronic circuits, circuit simulation, AC analysis, DC analysis, transient analysis, online simulator, electronics tools, web-based simulator"
-    />
-    <meta name="author" content="Shishir Dey" />
-    <meta name="robots" content="index, follow" />
-    <link
-      rel="canonical"
-      href="http://github.com/shishir-dey/ngspiceX"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta
-      property="og:url"
-      content="http://github.com/shishir-dey/ngspiceX"
-    />
-    <meta
-      property="og:title"
-      content="ngspiceX - Browser-Based SPICE Circuit Simulator | Online Electronics Analysis"
-    />
-    <meta
-      property="og:description"
-      content="Powerful browser-based SPICE circuit simulator that runs entirely in your web browser. Perform transient, AC, and DC analysis of electronic circuits online without any installation required."
-    />
-    <meta property="og:site_name" content="ngspiceX Browser-Based SPICE Simulator" />
-    <meta property="og:locale" content="en_US" />
+  <!-- SEO Meta Tags -->
+  <title>ngspiceX | Browser-Based SPICE Circuit Simulator</title>
+  <meta
+    name="description"
+    content="ngspiceX is a browser-based SPICE circuit simulator powered by ngspice compiled to WebAssembly using Emscripten. Supports transient, AC, DC, operating point, noise, distortion, sensitivity, pole-zero, and S-parameter analyses."
+  />
+  <meta
+    name="keywords"
+    content="SPICE simulator, ngspice, browser SPICE, circuit analysis, transient analysis, AC sweep, DC analysis, operating point, noise analysis, distortion, sensitivity analysis, pole-zero analysis, S-parameters, WebAssembly, Emscripten"
+  />
+  <meta name="author" content="Shishir Dey" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://github.com/shishir-dey/ngspiceX" />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta
-      property="twitter:url"
-      content="http://github.com/shishir-dey/ngspiceX"
-    />
-    <meta
-      property="twitter:title"
-      content="ngspiceX - Browser-Based SPICE Circuit Simulator | Online Electronics Analysis"
-    />
-    <meta
-      property="twitter:description"
-      content="Powerful browser-based SPICE circuit simulator that runs entirely in your web browser. Perform transient, AC, and DC analysis of electronic circuits online without any installation required."
-    />
-    <meta property="twitter:creator" content="@shishirdey" />
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://github.com/shishir-dey/ngspiceX" />
+  <meta property="og:title" content="ngspiceX | Browser-Based SPICE Circuit Simulator" />
+  <meta
+    property="og:description"
+    content="SPICE circuit simulation directly in the browser using ngspice compiled to WebAssembly. Includes support for transient, AC, DC, noise, distortion, sensitivity, pole-zero, and S-parameter analyses."
+  />
+  <meta property="og:image" content="https://raw.githubusercontent.com/shishir-dey/ngspiceX/main/preview.png" />
+  <meta property="og:site_name" content="ngspiceX" />
+  <meta property="og:locale" content="en_US" />
 
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "ngspiceX Browser-Based SPICE Simulator",
-        "description": "Browser-based SPICE circuit simulator for electronic circuit analysis that runs entirely in your web browser",
-        "author": {
-          "@type": "Person",
-          "name": "Shishir Dey"
-        },
-        "creator": {
-          "@type": "Person",
-          "name": "Shishir Dey"
-        },
-        "applicationCategory": "Engineering Software",
-        "operatingSystem": "Web Browser",
-        "url": "http://github.com/shishir-dey/ngspiceX",
-        "keywords": "SPICE simulator, circuit analysis, browser SPICE, ngspice, electronic circuits, circuit simulation, online electronics tools",
-        "dateCreated": "2025",
-        "license": "https://opensource.org/licenses/MIT",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        }
-      }
-    </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://github.com/shishir-dey/ngspiceX" />
+  <meta name="twitter:title" content="ngspiceX | Browser-Based SPICE Circuit Simulator" />
+  <meta
+    name="twitter:description"
+    content="Client-side SPICE simulator built with ngspice and WebAssembly. Supports multiple analysis types including transient, AC, DC, and advanced simulations."
+  />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/shishir-dey/ngspiceX/main/preview.png" />
+  <meta name="twitter:creator" content="@shishirdey" />
+
+  <!-- Structured Data (Schema.org) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "ngspiceX",
+      "description": "Browser-based SPICE circuit simulator based on ngspice compiled to WebAssembly. Enables circuit simulation with support for transient, AC, DC, operating point, noise, distortion, sensitivity, pole-zero, and S-parameter analyses.",
+      "applicationCategory": "EngineeringApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Modern browser with WebAssembly support",
+      "creator": {
+        "@type": "Person",
+        "name": "Shishir Dey"
+      },
+      "url": "https://github.com/shishir-dey/ngspiceX",
+      "license": "https://opensource.org/licenses/MIT",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "keywords": "SPICE simulator, ngspice, circuit simulation, AC analysis, transient, DC, operating point, sensitivity, noise, distortion, pole-zero, S-parameter, WebAssembly, Emscripten"
+    }
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
 </html>

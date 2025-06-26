@@ -42,9 +42,9 @@ const WaveformPane = ({ data }) => {
       title: {
         text: getPlotTitle(data.type),
         font: { size: 16, color: 'currentColor' },
-        x: 0.02,
+        x: 0.05,
         xanchor: 'left',
-        pad: { t: 5, b: 5 },
+        pad: { t: 15, b: 10 },
       },
       xaxis: {
         title: getXAxisTitle(data.type),
@@ -53,6 +53,9 @@ const WaveformPane = ({ data }) => {
         color: 'currentColor',
         titlefont: { size: 12 },
         tickfont: { size: 10 },
+        automargin: false,
+        side: 'bottom',
+        fixedrange: false,
       },
       yaxis: {
         title: getYAxisTitle(data.type),
@@ -61,6 +64,9 @@ const WaveformPane = ({ data }) => {
         color: 'currentColor',
         titlefont: { size: 12 },
         tickfont: { size: 10 },
+        automargin: false,
+        side: 'left',
+        fixedrange: false,
       },
       plot_bgcolor: 'transparent',
       paper_bgcolor: 'transparent',
@@ -70,7 +76,12 @@ const WaveformPane = ({ data }) => {
         color: 'currentColor',
         size: 11,
       },
-      margin: { l: 60, r: 30, t: 55, b: 50 },
+      margin: {
+        l: 80,
+        r: 50,
+        t: 80,
+        b: 70,
+      },
       showlegend: true,
       legend: {
         x: 0.02,
@@ -79,6 +90,7 @@ const WaveformPane = ({ data }) => {
         bordercolor: 'rgba(128,128,128,0.3)',
         borderwidth: 1,
         font: { size: 10 },
+        orientation: 'v',
       },
       hovermode: 'x unified',
       autosize: true,
@@ -116,7 +128,7 @@ const WaveformPane = ({ data }) => {
     }
 
     Plotly.newPlot(plotRef.current, filteredTraces, layout, config).then(() => {
-      // Ensure plot fills the container properly
+      // Ensure plot fills the container properly without expanding it
       Plotly.Plots.resize(plotRef.current)
     })
   }
@@ -168,9 +180,24 @@ const WaveformPane = ({ data }) => {
 
   if (!data) {
     return (
-      <div className="h-full w-full min-h-[300px] flex items-center justify-center text-gray-500 bg-gray-50 rounded-b-lg">
-        <div className="text-center">
-          <div className="text-base font-medium mb-2 text-gray-700">
+      <div className="h-full w-full flex items-center justify-center bg-gray-50">
+        <div className="text-center p-8">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+            <svg
+              className="w-8 h-8 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+              />
+            </svg>
+          </div>
+          <div className="text-lg font-medium mb-2 text-gray-700">
             No simulation data
           </div>
           <div className="text-sm text-gray-500">
@@ -184,40 +211,76 @@ const WaveformPane = ({ data }) => {
   // Handle operating point analysis (no plots, just values)
   if (data.type === 'operating_point' && data.values) {
     return (
-      <div className="h-full w-full min-h-[300px] p-4 bg-gray-50 rounded-b-lg overflow-auto">
-        <div className="bg-white rounded-lg border border-gray-200 p-4">
-          <h3 className="text-lg font-medium text-gray-900 mb-3">
-            Operating Point Analysis
-          </h3>
-          <div className="space-y-2">
-            {Object.entries(data.values).map(([variable, value]) => (
-              <div
-                key={variable}
-                className="flex justify-between items-center py-1 border-b border-gray-100 last:border-b-0"
-              >
-                <span className="font-mono text-sm text-gray-700 font-medium">
-                  {variable}:
-                </span>
-                <span className="font-mono text-sm text-gray-900">{value}</span>
+      <div className="h-full w-full overflow-auto bg-gray-50">
+        <div className="flex items-center justify-center min-h-full p-6">
+          <div className="max-w-2xl w-full">
+            <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+              <div className="p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                    <svg
+                      className="w-5 h-5 text-blue-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13 10V3L4 14h7v7l9-11h-7z"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900">
+                    Operating Point Analysis
+                  </h3>
+                </div>
+                <div className="space-y-3 max-h-64 overflow-y-auto">
+                  {Object.entries(data.values).map(([variable, value]) => (
+                    <div
+                      key={variable}
+                      className="flex justify-between items-center py-3 px-4 bg-gray-50 rounded-lg border border-gray-100"
+                    >
+                      <span className="font-mono text-sm text-gray-700 font-medium">
+                        {variable}
+                      </span>
+                      <span className="font-mono text-sm text-gray-900 font-semibold">
+                        {value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                {data.message && (
+                  <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                    <div className="text-sm text-blue-700">{data.message}</div>
+                  </div>
+                )}
               </div>
-            ))}
-          </div>
-          {data.message && (
-            <div className="mt-4 text-sm text-gray-600 italic">
-              {data.message}
             </div>
-          )}
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div
-      ref={containerRef}
-      className="h-full w-full min-h-[300px] rounded-b-lg overflow-hidden flex flex-col p-2 relative"
-    >
-      <div ref={plotRef} className="flex-1 w-full min-h-0" />
+    <div className="h-full w-full flex flex-col overflow-hidden">
+      <div
+        ref={containerRef}
+        className="flex-1 overflow-hidden"
+        style={{ minHeight: 0 }}
+      >
+        <div
+          ref={plotRef}
+          className="w-full h-full"
+          style={{
+            minHeight: 0,
+            maxHeight: '100%',
+            maxWidth: '100%',
+          }}
+        />
+      </div>
     </div>
   )
 }

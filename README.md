@@ -1,4 +1,6 @@
-# ngspiceX
+<div align="center">
+  <img src="public/ngspiceX-landscape.png" alt="ngspiceX Logo">
+</div>
 
 [![Deploy React App to GitHub Pages](https://github.com/shishir-dey/ngspiceX/actions/workflows/deploy.yml/badge.svg)](https://github.com/shishir-dey/ngspiceX/actions/workflows/deploy.yml)
 

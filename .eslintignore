@@ -1,0 +1,14 @@
+# Ignore compiled/minified files
+dist/
+node_modules/
+
+# Ignore WASM files and generated code
+public/wasm/
+*.wasm
+
+# Ignore build artifacts
+.vite/
+coverage/
+
+# Ignore lock files
+package-lock.json

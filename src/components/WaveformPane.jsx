@@ -1,38 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useCallback } from 'react'
 import Plotly from 'plotly.js-dist-min'
 
 const WaveformPane = ({ data }) => {
   const plotRef = useRef(null)
   const containerRef = useRef(null)
 
-  useEffect(() => {
-    if (plotRef.current && data) {
-      renderPlot()
-    } else if (plotRef.current && !data) {
-      clearPlot()
+  const clearPlot = useCallback(() => {
+    if (plotRef.current) {
+      Plotly.purge(plotRef.current)
     }
-  }, [data])
+  }, [])
 
-  // Add resize observer to handle container size changes
-  useEffect(() => {
-    if (!containerRef.current || !plotRef.current) return
-
-    const resizeObserver = new ResizeObserver(() => {
-      if (plotRef.current && data) {
-        setTimeout(() => {
-          Plotly.Plots.resize(plotRef.current)
-        }, 100)
-      }
-    })
-
-    resizeObserver.observe(containerRef.current)
-
-    return () => {
-      resizeObserver.disconnect()
-    }
-  }, [data])
-
-  const renderPlot = () => {
+  const renderPlot = useCallback(() => {
     if (!data || !plotRef.current) return
 
     // Use all traces from data (filtering is handled at a higher level)
@@ -131,13 +110,35 @@ const WaveformPane = ({ data }) => {
       // Ensure plot fills the container properly without expanding it
       Plotly.Plots.resize(plotRef.current)
     })
-  }
+  }, [data])
 
-  const clearPlot = () => {
-    if (plotRef.current) {
-      Plotly.purge(plotRef.current)
+  useEffect(() => {
+    if (plotRef.current && data) {
+      renderPlot()
+    } else if (plotRef.current && !data) {
+      clearPlot()
     }
-  }
+  }, [data, renderPlot, clearPlot])
+
+  // Add resize observer to handle container size changes
+  useEffect(() => {
+    if (!containerRef.current || !plotRef.current) return
+
+    const resizeObserver = new ResizeObserver(() => {
+      if (plotRef.current && data) {
+        setTimeout(() => {
+          Plotly.Plots.resize(plotRef.current)
+        }, 100)
+      }
+    })
+
+    resizeObserver.observe(containerRef.current)
+
+    return () => {
+      resizeObserver.disconnect()
+    }
+  }, [data])
+
 
   const getPlotTitle = (type) => {
     switch (type) {
@@ -177,6 +178,7 @@ const WaveformPane = ({ data }) => {
         return 'Y Axis'
     }
   }
+
 
   if (!data) {
     return (

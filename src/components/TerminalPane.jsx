@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { cn } from '../lib/utils'
 
 const TerminalPane = ({ output }) => {
@@ -36,36 +36,36 @@ const TerminalPane = ({ output }) => {
                     'whitespace-pre-wrap break-words leading-tight text-xs',
                     // System messages
                     line.startsWith('>') &&
-                      'text-blue-300 font-medium pl-2 border-l-2 border-blue-500 border-opacity-40 ml-1 bg-blue-900/10',
+                    'text-blue-300 font-medium pl-2 border-l-2 border-blue-500 border-opacity-40 ml-1 bg-blue-900/10',
                     // User commands (ngspice prompt)
                     line.startsWith('ngspice>') &&
-                      'text-green-300 font-medium bg-gray-800/50 px-3 py-1 rounded-md my-1 border-l-2 border-green-500',
+                    'text-green-300 font-medium bg-gray-800/50 px-3 py-1 rounded-md my-1 border-l-2 border-green-500',
                     // Error messages
                     line.toLowerCase().includes('error') &&
-                      'text-red-300 font-medium bg-red-900/20 px-3 py-1 rounded-md border-l-2 border-red-500',
+                    'text-red-300 font-medium bg-red-900/20 px-3 py-1 rounded-md border-l-2 border-red-500',
                     // Warning messages
                     line.toLowerCase().includes('warning') &&
-                      'text-yellow-300 font-medium bg-yellow-900/20 px-3 py-1 rounded-md border-l-2 border-yellow-500',
+                    'text-yellow-300 font-medium bg-yellow-900/20 px-3 py-1 rounded-md border-l-2 border-yellow-500',
                     // Success messages
                     line.toLowerCase().includes('success') &&
-                      'text-green-300 font-medium bg-green-900/20 px-3 py-1 rounded-md border-l-2 border-green-500',
+                    'text-green-300 font-medium bg-green-900/20 px-3 py-1 rounded-md border-l-2 border-green-500',
                     // Analysis commands and results
                     (line.includes('analysis') || line.includes('Analysis')) &&
-                      'text-cyan-300',
+                    'text-cyan-300',
                     // Variable listings
                     line.includes('=') &&
-                      !line.startsWith('>') &&
-                      !line.startsWith('ngspice>') &&
-                      'text-gray-300 font-mono pl-6 text-xs',
+                    !line.startsWith('>') &&
+                    !line.startsWith('ngspice>') &&
+                    'text-gray-300 font-mono pl-6 text-xs',
                     // Regular output
                     !line.startsWith('>') &&
-                      !line.startsWith('ngspice>') &&
-                      !line.toLowerCase().includes('error') &&
-                      !line.toLowerCase().includes('warning') &&
-                      !line.toLowerCase().includes('success') &&
-                      !line.includes('=') &&
-                      line.trim() !== '' &&
-                      'text-gray-200'
+                    !line.startsWith('ngspice>') &&
+                    !line.toLowerCase().includes('error') &&
+                    !line.toLowerCase().includes('warning') &&
+                    !line.toLowerCase().includes('success') &&
+                    !line.includes('=') &&
+                    line.trim() !== '' &&
+                    'text-gray-200'
                   )}
                 >
                   {line || '\u00A0'} {/* Non-breaking space for empty lines */}

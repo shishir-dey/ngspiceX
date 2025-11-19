@@ -33,7 +33,7 @@ C1 out 0 1u
   const [currentAnalysisType, setCurrentAnalysisType] = useState('transient')
   const [showVariablePanel, setShowVariablePanel] = useState(false)
 
-  const { components, connections, directives, errors, parseNetlist } =
+  const { components, connections, errors, parseNetlist } =
     useNetlistParser()
   const {
     isLoaded: ngspiceLoaded,
@@ -181,7 +181,7 @@ C1 out 0 1u
     addLog(
       `Initial netlist parsed: ${result.components?.length || 0} components, ${result.errors?.length || 0} errors`
     )
-  }, []) // Empty dependency array for one-time execution
+  }, [parseNetlist, netlistText, addLog])
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -220,10 +220,10 @@ C1 out 0 1u
                     <span className="text-green-700 font-normal">Ready</span>
                   </div>
                 ) : logs.some(
-                    (log) =>
-                      log.type === 'error' &&
-                      log.message.includes('Failed to load ngspice')
-                  ) ? (
+                  (log) =>
+                    log.type === 'error' &&
+                    log.message.includes('Failed to load ngspice')
+                ) ? (
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-red-50 border border-red-200 rounded-md">
                     <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                     <span className="text-red-700 font-normal">Failed</span>
@@ -415,12 +415,11 @@ C1 out 0 1u
                                 setCurrentAnalysisType(type)
                                 setShowAnalysisDropdown(false)
                               }}
-                              className={`w-full text-left p-2 rounded transition-colors ${
-                                (simulationData?.type ||
-                                  currentAnalysisType) === type
-                                  ? 'bg-blue-50 border border-blue-200'
-                                  : 'hover:bg-gray-50'
-                              }`}
+                              className={`w-full text-left p-2 rounded transition-colors ${(simulationData?.type ||
+                                currentAnalysisType) === type
+                                ? 'bg-blue-50 border border-blue-200'
+                                : 'hover:bg-gray-50'
+                                }`}
                             >
                               <div className="flex items-center justify-between mb-0.5">
                                 <span className="font-mono text-xs text-gray-600">
@@ -428,8 +427,8 @@ C1 out 0 1u
                                 </span>
                                 {(simulationData?.type ||
                                   currentAnalysisType) === type && (
-                                  <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
-                                )}
+                                    <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                                  )}
                               </div>
                               <div className="text-xs font-normal text-gray-800 leading-tight">
                                 {getAnalysisInfo(type).name}
@@ -455,15 +454,15 @@ C1 out 0 1u
                   data={
                     simulationData
                       ? {
-                          ...simulationData,
-                          traces:
-                            simulationData.traces?.map((trace) => ({
-                              ...trace,
-                              visible:
-                                selectedVariables.size === 0 ||
-                                selectedVariables.has(trace.name),
-                            })) || [],
-                        }
+                        ...simulationData,
+                        traces:
+                          simulationData.traces?.map((trace) => ({
+                            ...trace,
+                            visible:
+                              selectedVariables.size === 0 ||
+                              selectedVariables.has(trace.name),
+                          })) || [],
+                      }
                       : null
                   }
                 />
@@ -668,12 +667,11 @@ C1 out 0 1u
                                   setCurrentAnalysisType(type)
                                   setShowAnalysisDropdown(false)
                                 }}
-                                className={`w-full text-left p-2 rounded transition-colors ${
-                                  (simulationData?.type ||
-                                    currentAnalysisType) === type
-                                    ? 'bg-blue-50 border border-blue-200'
-                                    : 'hover:bg-gray-50'
-                                }`}
+                                className={`w-full text-left p-2 rounded transition-colors ${(simulationData?.type ||
+                                  currentAnalysisType) === type
+                                  ? 'bg-blue-50 border border-blue-200'
+                                  : 'hover:bg-gray-50'
+                                  }`}
                               >
                                 <div className="flex items-center justify-between mb-0.5">
                                   <span className="font-mono text-xs text-gray-600">
@@ -681,8 +679,8 @@ C1 out 0 1u
                                   </span>
                                   {(simulationData?.type ||
                                     currentAnalysisType) === type && (
-                                    <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
-                                  )}
+                                      <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                                    )}
                                 </div>
                                 <div className="text-xs font-medium text-gray-800 leading-tight">
                                   {getAnalysisInfo(type).name}
@@ -711,15 +709,15 @@ C1 out 0 1u
                     data={
                       simulationData
                         ? {
-                            ...simulationData,
-                            traces:
-                              simulationData.traces?.map((trace) => ({
-                                ...trace,
-                                visible:
-                                  selectedVariables.size === 0 ||
-                                  selectedVariables.has(trace.name),
-                              })) || [],
-                          }
+                          ...simulationData,
+                          traces:
+                            simulationData.traces?.map((trace) => ({
+                              ...trace,
+                              visible:
+                                selectedVariables.size === 0 ||
+                                selectedVariables.has(trace.name),
+                            })) || [],
+                        }
                         : null
                     }
                   />

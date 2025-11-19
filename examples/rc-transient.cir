@@ -1,0 +1,11 @@
+* RC Transient Test
+* Simple RC circuit with step input
+V1 in 0 PULSE(0 5 0 1u 1u 0 1m)
+R1 in out 1k
+C1 out 0 1u
+.tran 0 2m 0 2u
+.control
+run
+print v(out)
+.endc
+.end

@@ -1,0 +1,110 @@
+* Massive RLC Network (Passive Only)
+
+************* SOURCES *************
+V1 in 0 DC 0 AC 1
+
+************* STAGE 1 *************
+R1 in n1 1k
+L1 n1 n2 10uH
+C1 n2 0 100pF
+
+R2 n2 n3 1.2k
+L2 n3 n4 12uH
+C2 n4 0 120pF
+
+R3 n4 n5 1.5k
+L3 n5 n6 15uH
+C3 n6 0 150pF
+
+************* STAGE 2 *************
+R4 n6 n7 1.1k
+L4 n7 n8 11uH
+C4 n8 0 110pF
+
+R5 n8 n9 1.3k
+L5 n9 n10 13uH
+C5 n10 0 130pF
+
+R6 n10 n11 1.6k
+L6 n11 n12 16uH
+C6 n12 0 160pF
+
+************* STAGE 3 *************
+R7 n12 n13 1.2k
+L7 n13 n14 12uH
+C7 n14 0 120pF
+
+R8 n14 n15 1.4k
+L8 n15 n16 14uH
+C8 n16 0 140pF
+
+R9 n16 n17 1.7k
+L9 n17 n18 17uH
+C9 n18 0 170pF
+
+************* CROSS COUPLING *************
+R10 n3 n9 2k
+L10 n5 n11 20uH
+C10 n7 0 50pF
+
+R11 n9 n15 2.2k
+L11 n11 n17 22uH
+C11 n13 0 60pF
+
+************* MESH LINKS *************
+R12 n2 n8 3k
+R13 n4 n10 3.2k
+R14 n6 n12 3.4k
+R15 n8 n14 3.6k
+R16 n10 n16 3.8k
+R17 n12 n18 4k
+
+************* PARALLEL BRANCHES *************
+R18 n1 n6 5k
+L12 n6 n1 25uH
+C12 n6 0 200pF
+
+R19 n7 n12 5.2k
+L13 n12 n7 27uH
+C13 n12 0 220pF
+
+R20 n13 n18 5.5k
+L14 n18 n13 30uH
+C14 n18 0 250pF
+
+************* EXTENDED NETWORK *************
+R21 n18 n19 1k
+L15 n19 n20 10uH
+C15 n20 0 100pF
+
+R22 n20 n21 1.1k
+L16 n21 n22 11uH
+C16 n22 0 110pF
+
+R23 n22 n23 1.2k
+L17 n23 n24 12uH
+C17 n24 0 120pF
+
+R24 n24 n25 1.3k
+L18 n25 n26 13uH
+C18 n26 0 130pF
+
+R25 n26 n27 1.4k
+L19 n27 n28 14uH
+C19 n28 0 140pF
+
+************* TERMINATION *************
+RLOAD n28 0 10k
+
+************* ANALYSIS *************
+.op
+.ac dec 50 1 10Meg
+.tran 0.1u 5m
+
+************* CONTROL *************
+.control
+run
+plot v(n28)
+.endc
+
+.end

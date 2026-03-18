@@ -4,6 +4,7 @@ import { Button } from './components/ui/button'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './components/ui/tabs'
 import { useNetlistParser } from './hooks/useNetlistParser'
 import { useNgspice } from './hooks/useNgspice'
+import { useSchematicLayout } from './hooks/useSchematicLayout'
 import EditorPane from './components/EditorPane'
 import WaveformPane from './components/WaveformPane'
 import TerminalPane from './components/TerminalPane'
@@ -33,8 +34,7 @@ C1 out 0 1u
   const [currentAnalysisType, setCurrentAnalysisType] = useState('transient')
   const [showVariablePanel, setShowVariablePanel] = useState(false)
 
-  const { components, connections, errors, parseNetlist } =
-    useNetlistParser()
+  const { components, connections, errors, parseNetlist } = useNetlistParser()
   const {
     isLoaded: ngspiceLoaded,
     isRunning: isSimulating,
@@ -46,6 +46,15 @@ C1 out 0 1u
     runSimulation,
     toggleVariable,
   } = useNgspice()
+  const {
+    layoutResult,
+    layoutMode,
+    highlightedNet,
+    computeFullLayout,
+    handleComponentDrag,
+    changeLayoutMode,
+    setHighlightedNet,
+  } = useSchematicLayout()
 
   // Analysis types mapping
   const getAnalysisInfo = useCallback((type) => {
@@ -126,15 +135,28 @@ C1 out 0 1u
   const handleModeChange = useCallback(
     (newMode) => {
       setMode(newMode)
-      // Parse netlist when switching to schematic mode to ensure components are available
+      // Parse netlist and compute layout when switching to schematic mode
       if (newMode === 'schematic') {
         const result = parseNetlist(netlistText)
         addLog(
           `Schematic mode: ${result.components?.length || 0} components found`
         )
+        if (result.components?.length > 0) {
+          computeFullLayout(result.components)
+          addLog('Layout computed', 'info')
+        }
       }
     },
-    [netlistText, parseNetlist, addLog]
+    [netlistText, parseNetlist, addLog, computeFullLayout]
+  )
+
+  const handleLayoutModeChange = useCallback(
+    (newMode) => {
+      const result = parseNetlist(netlistText)
+      changeLayoutMode(newMode, result.components)
+      addLog(`Layout mode: ${newMode}`, 'info')
+    },
+    [netlistText, parseNetlist, changeLayoutMode, addLog]
   )
 
   const handleSimulate = useCallback(async () => {
@@ -220,10 +242,10 @@ C1 out 0 1u
                     <span className="text-green-700 font-normal">Ready</span>
                   </div>
                 ) : logs.some(
-                  (log) =>
-                    log.type === 'error' &&
-                    log.message.includes('Failed to load ngspice')
-                ) ? (
+                    (log) =>
+                      log.type === 'error' &&
+                      log.message.includes('Failed to load ngspice')
+                  ) ? (
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-red-50 border border-red-200 rounded-md">
                     <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                     <span className="text-red-700 font-normal">Failed</span>
@@ -298,6 +320,12 @@ C1 out 0 1u
                   components={components}
                   connections={connections}
                   errors={errors}
+                  layoutResult={layoutResult}
+                  layoutMode={layoutMode}
+                  highlightedNet={highlightedNet}
+                  onHighlightNet={setHighlightedNet}
+                  onComponentDrag={handleComponentDrag}
+                  onChangeLayoutMode={handleLayoutModeChange}
                 />
               </div>
             </CardContent>
@@ -415,11 +443,12 @@ C1 out 0 1u
                                 setCurrentAnalysisType(type)
                                 setShowAnalysisDropdown(false)
                               }}
-                              className={`w-full text-left p-2 rounded transition-colors ${(simulationData?.type ||
-                                currentAnalysisType) === type
-                                ? 'bg-blue-50 border border-blue-200'
-                                : 'hover:bg-gray-50'
-                                }`}
+                              className={`w-full text-left p-2 rounded transition-colors ${
+                                (simulationData?.type ||
+                                  currentAnalysisType) === type
+                                  ? 'bg-blue-50 border border-blue-200'
+                                  : 'hover:bg-gray-50'
+                              }`}
                             >
                               <div className="flex items-center justify-between mb-0.5">
                                 <span className="font-mono text-xs text-gray-600">
@@ -427,8 +456,8 @@ C1 out 0 1u
                                 </span>
                                 {(simulationData?.type ||
                                   currentAnalysisType) === type && (
-                                    <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
-                                  )}
+                                  <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                                )}
                               </div>
                               <div className="text-xs font-normal text-gray-800 leading-tight">
                                 {getAnalysisInfo(type).name}
@@ -454,15 +483,15 @@ C1 out 0 1u
                   data={
                     simulationData
                       ? {
-                        ...simulationData,
-                        traces:
-                          simulationData.traces?.map((trace) => ({
-                            ...trace,
-                            visible:
-                              selectedVariables.size === 0 ||
-                              selectedVariables.has(trace.name),
-                          })) || [],
-                      }
+                          ...simulationData,
+                          traces:
+                            simulationData.traces?.map((trace) => ({
+                              ...trace,
+                              visible:
+                                selectedVariables.size === 0 ||
+                                selectedVariables.has(trace.name),
+                            })) || [],
+                        }
                       : null
                   }
                 />
@@ -543,6 +572,12 @@ C1 out 0 1u
                   components={components}
                   connections={connections}
                   errors={errors}
+                  layoutResult={layoutResult}
+                  layoutMode={layoutMode}
+                  highlightedNet={highlightedNet}
+                  onHighlightNet={setHighlightedNet}
+                  onComponentDrag={handleComponentDrag}
+                  onChangeLayoutMode={handleLayoutModeChange}
                 />
               </CardContent>
             </Card>
@@ -667,11 +702,12 @@ C1 out 0 1u
                                   setCurrentAnalysisType(type)
                                   setShowAnalysisDropdown(false)
                                 }}
-                                className={`w-full text-left p-2 rounded transition-colors ${(simulationData?.type ||
-                                  currentAnalysisType) === type
-                                  ? 'bg-blue-50 border border-blue-200'
-                                  : 'hover:bg-gray-50'
-                                  }`}
+                                className={`w-full text-left p-2 rounded transition-colors ${
+                                  (simulationData?.type ||
+                                    currentAnalysisType) === type
+                                    ? 'bg-blue-50 border border-blue-200'
+                                    : 'hover:bg-gray-50'
+                                }`}
                               >
                                 <div className="flex items-center justify-between mb-0.5">
                                   <span className="font-mono text-xs text-gray-600">
@@ -679,8 +715,8 @@ C1 out 0 1u
                                   </span>
                                   {(simulationData?.type ||
                                     currentAnalysisType) === type && (
-                                      <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
-                                    )}
+                                    <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                                  )}
                                 </div>
                                 <div className="text-xs font-medium text-gray-800 leading-tight">
                                   {getAnalysisInfo(type).name}
@@ -709,15 +745,15 @@ C1 out 0 1u
                     data={
                       simulationData
                         ? {
-                          ...simulationData,
-                          traces:
-                            simulationData.traces?.map((trace) => ({
-                              ...trace,
-                              visible:
-                                selectedVariables.size === 0 ||
-                                selectedVariables.has(trace.name),
-                            })) || [],
-                        }
+                            ...simulationData,
+                            traces:
+                              simulationData.traces?.map((trace) => ({
+                                ...trace,
+                                visible:
+                                  selectedVariables.size === 0 ||
+                                  selectedVariables.has(trace.name),
+                              })) || [],
+                          }
                         : null
                     }
                   />

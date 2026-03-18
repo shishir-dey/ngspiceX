@@ -139,7 +139,6 @@ const WaveformPane = ({ data }) => {
     }
   }, [data])
 
-
   const getPlotTitle = (type) => {
     switch (type) {
       case 'time':
@@ -178,7 +177,6 @@ const WaveformPane = ({ data }) => {
         return 'Y Axis'
     }
   }
-
 
   if (!data) {
     return (

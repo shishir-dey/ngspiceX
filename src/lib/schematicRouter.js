@@ -2,7 +2,7 @@
  * Schematic Router
  */
 
-// ─── 5.1A: L-Shaped Routing ────────────────────────────────────────────────────
+// ─── L-Shaped Routing ────────────────────────────────────────────────────
 
 /**
  * Simple L-shaped route between two points.
@@ -16,7 +16,7 @@ function lRoute(from, to) {
   ].filter((seg) => seg.x1 !== seg.x2 || seg.y1 !== seg.y2)
 }
 
-// ─── 5.1B: Grid-based A* Routing ───────────────────────────────────────────────
+// ─── Grid-based A* Routing ───────────────────────────────────────────────
 
 const GRID_SIZE = 10 // Routing grid resolution in pixels
 
@@ -247,7 +247,7 @@ function gridPathToSegments(path) {
   return segments
 }
 
-// ─── 5.1C: Multi-Terminal Net Routing (Steiner Approximation) ───────────────────
+// ─── Multi-Terminal Net Routing (Steiner Approximation) ───────────────────
 
 /**
  * Route a net with multiple pins using iterative closest-pair merging.
@@ -293,7 +293,7 @@ function steinerRoute(pins, occupancy, existingSegments = []) {
   return allSegments.slice(existingSegments.length)
 }
 
-// ─── 5.3: Junction Optimization ─────────────────────────────────────────────────
+// ─── Junction Optimization ─────────────────────────────────────────────────
 
 /**
  * Find junction points (where 3+ wire segments meet).
